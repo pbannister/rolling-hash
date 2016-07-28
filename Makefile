@@ -10,8 +10,9 @@ o 			: ; mkdir o
 clean 		: clean.o o
 clean.o 	: ; rm -rf o 
  
-CC			= cc -O3
+#CC			= cc -O3
 #CC			= g++ -O3
+CC			= g++-6 -mavx2 -mtune=native -O3 -Wall 
 
 o/%.o: sources/%.c
 	$(CC) -c -o $@ $<
@@ -19,7 +20,7 @@ o/%.o: sources/%.c
 o/%.o: sources/%.cpp
 	$(CC) -c -o $@ $<
 
-O_rate=o/main.o o/ZRollingHash.o	
+O_rate=o/main.o o/ZRollingHash.o o/table-maker.o	
 X_rate=bin/rate
 
 $(X_rate) : $(O_rate)

@@ -5,19 +5,12 @@
 
 #include "common.h"
 #include "ZRollingHash.h"
-#include "ZRandom.h"
+
+extern unsigned* table_prime(unsigned, unsigned);
 
 void ZRollingHash::prime(unsigned seed, unsigned _mask) {
-	table = new unsigned[256];
+	table = table_prime(seed, _mask);
 	mask = _mask;
-
-	// Generate a 256 place table of random values.
-	// The table of "random" values defeat simple exploits.
-	// Should test for a "bad" table (though unlikely).
-	ZRandom generator(seed);
-	for (int i=0; i<256; ++i) {
-		table[i] = generator.getValue();
-	}
 }
 
 int ZRollingHash::scanBuffer(char_p p0, int n0) {
